@@ -1,0 +1,16 @@
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\obj\Debug\Ecommerce.Database.csproj.AssemblyReference.cache
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\obj\Debug\Ecommerce.Database.csproj.CoreCompileInputs.cache
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\bin\Debug\Ecommerce.Database.dll.config
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\bin\Debug\Ecommerce.Database.dll
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\bin\Debug\Ecommerce.Database.pdb
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\bin\Debug\EntityFramework.dll
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\bin\Debug\Ecommerce.Entities.dll
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\bin\Debug\Ecommerce.Entities.pdb
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\obj\Debug\Ecommerce.Database.csproj.CopyComplete
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\obj\Debug\Ecommerce.Database.dll
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\obj\Debug\Ecommerce.Database.pdb
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\obj\Debug\Ecommerce.Database.Migrations.Intial.resources
+C:\Users\SOFT\source\repos\ECommerce\Ecommerce.Database\obj\Debug\Ecommerce.Database.csproj.GenerateResource.cache

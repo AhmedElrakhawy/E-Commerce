@@ -1,0 +1,191 @@
+﻿@model Ecommerce.Web.ViewModel.CategorySearchViewModel
+@{
+    ViewBag.Title = "CategoryTable";
+}
+
+<div>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>Search</label>
+                    <input class="form-control" id="searchTxt" name="Search" value="@Model.SearchTerm" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Actions</label>
+                    <div class="row">
+                        <div class="col-md-4 pr-0">
+                            <button class="btn btn-primary form-control" type="button" id="searchBtn">Search</button>
+                        </div>
+                        <div class="col-md-4 pr-0">
+                            <button class="btn btn-primary form-control" type="button" id="newBtn">New</button>
+                        </div>
+                        <div class="col-md-4 pr-0">
+                            <button class="btn btn-primary form-control" type="button" id="ResetBtn">Reset</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+</div>
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="font-weight-bold">Category Name</th>
+                <th class="font-weight-bold">Products</th>
+                <th class="font-weight-bold wrap-td">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Categories != null && Model.Categories.Count > 0)
+            {
+                foreach (var Category in Model.Categories)
+                {
+                    <tr>
+                        <td>@Category.Name</td>
+                        <td>
+                            @Category.Products.Count()
+                        </td>
+                        <td>
+                            <button class="EditBtn" data-id="@Category.ID">Edit</button>
+                            <button class="DeleteBtn" data-id="@Category.ID">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="3" class="text-danger">No Categories found.</td></tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+        {
+            if (Model.Pager.CurrentPage > 1)
+            {
+                <button class="PageButtons" data-PageNo="1">First</button>
+                <button class="PageButtons" data-PageNo="@(Model.Pager.CurrentPage -1)">Previous</button>
+            }
+            for (var Page = Model.Pager.StartPage; Page <= Model.Pager.EndPage; Page++)
+            {
+                var ActiveClass = Model.Pager.CurrentPage == Page ? "Active bg-info" : string.Empty;
+                <button class="@ActiveClass PageButtons" data-PageNo="@Page">@Page</button>
+            }
+            if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <button class="PageButtons" data-PageNo="@(Model.Pager.CurrentPage +1)">Next</button>
+                <button class="PageButtons" data-PageNo="@Model.Pager.EndPage">Last</button>
+            }
+        }
+    </div>
+</div>
+<script>
+     $(".PageButtons").click(function () {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("CategoryTable","Category")',
+            data : {
+                PageNo: $(this).attr('data-PageNo'),
+                search: "@Model.SearchTerm"
+        }
+        }).done(function (response) {
+            $("#tableContainer").html(response);
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+    $("#searchBtn").click(function () {
+        var SearchValue = $("#searchTxt").val();
+
+        $.ajax({
+            url: '@Url.Action("CategoryTable", "Category")' ,
+            data: {
+                search: SearchValue,
+            }
+        }).done(function (response) {
+            $("#tableContainer").html(response);
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+
+    $("#ResetBtn").click(function () {
+        var SearchValue = "" ;
+
+        $.ajax({
+            url: '@Url.Action("CategoryTable", "Category")',
+            data: {
+                search: SearchValue
+            }
+        }).done(function (response) {
+            $("#tableContainer").html(response);
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+    $("#newBtn").click(function () {
+        $.ajax({
+/*            type: "GET",*/
+            url: '@Url.Action("Create", "Category")'
+        }).done(function (response) {
+            $("#actionContainer").html(response);
+            focusAction("actionContainer");
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+    $(".EditBtn").click(function () {
+        $.ajax(
+            {
+                type:"GET",
+                url: '@Url.Action("Edit", "Category")',
+                data: {
+                    ID: $(this).attr('data-id')
+                }
+            })
+            .done(function (response) {
+                $("#actionContainer").html(response);
+
+                focusAction("actionContainer");
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+    $(".DeleteBtn").click(function () {
+        swal({
+  title: "Are you sure?",
+  text: "Do u Want to delete This Category ? ",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '@Url.Action("Delete", "Category")',
+                        data: {
+                            ID: $(this).attr('data-id')
+                        }
+                    }).done(function (response) {
+                        $("#tableContainer").html(response);
+                        swal("Category have been Deleted", {
+                            icon: "success",
+                        });
+                    }).fail(function (XMLHttpRequest, testStatus, errorthrown) {
+                        alert("Fail");
+                    });
+            }
+        })
+    });
+</script>

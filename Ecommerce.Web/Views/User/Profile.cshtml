@@ -1,0 +1,122 @@
+﻿@model Ecommerce.Web.ViewModel.UserProfileViewModel
+@{
+    ViewBag.Title = "Profile";
+    var UserImage = !string.IsNullOrEmpty(Model.User.ImageUrl) ? Model.User.ImageUrl : "/Content/images/system/placeholder-image.png";
+}
+
+<form id="ProfileForm">
+    <div class="container rounded bg-white mt-5 mb-5">
+        <input hidden value="@Model.User.Id" name="Id" />
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" id="Profileimage" src="@UserImage">
+                    <span class="font-weight-bold">@Model.User.Name</span>
+                    <span class="text-black-50">@Model.User.Email</span><span> </span>
+                </div>
+                <input id="ImageUrl" value="@Model.User.ImageUrl" name="ImageUrl" type="hidden" />
+                <input class="form-control" id="imageUpload" name="Image" type="file" accept=".jpg , .png" />
+            </div>
+
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="labels" for="Name">Name</label>
+                            <input type="text" class="form-control" placeholder="first name" name="Name" value="@Model.User.Name">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels" for="UserName">UserName</label>
+                            <input type="text" class="form-control" name="UserName" value="@Model.User.UserName" placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels" for="PhoneNumber">Phone</label>
+                            <input type="text" class="form-control" placeholder="enter phone number" name="PhoneNumber" value="@Model.User.PhoneNumber">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels" for="Address">Address</label>
+                            <input type="text" class="form-control" placeholder="enter address line 1" name="Address" value="@Model.User.Address">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels" for="Email">Email</label>
+                            <input type="text" class="form-control" placeholder="example@aaaa.com" name="Email" value="@Model.User.Email">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels" for="Role">@{Model.User.Roles.ToList().Where(x=> x.UserId == Model.User.Id);}</label>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary" type="button" id="SaveBtn">Save Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $("#imageUpload").change(function () {
+                                    debugger;
+                                    var element = this;
+                                    var formdata = new FormData();
+                                    var totalfile = element.files.length;
+                                    for (var i = 0; i < totalfile; i++) {
+                                        var file = element.files[i];
+                                        formdata.append("photo", file);
+                                    }
+        $.ajax({
+                                    type: 'POST',
+            url: '@Url.Action("UploadImage","Shared")' /*'/Shared/UploadImage'*/,
+            dataType:'json',
+            data: formdata,
+            contentType: false,
+            processData: false
+        }).done(function (response) {
+                                        console.log(response);
+                                        if (response.Success) {
+                $("#Profileimage").attr("src", response.ImageURL);
+                $("#ImageUrl").val(response.ImageURL);
+                                        }
+                                    }).fail(function (XMLHttpRequest, testStatus, errorThrown) {
+                                        alert("Fail");
+                                    });
+                                });
+
+
+    $("#SaveBtn").click(function () {
+
+        $.ajax({
+                                    type: 'POST',
+            url: '@Url.Action("Update","User")',
+            dataType: 'json',
+            data: $("#ProfileForm").serialize()
+        }).done(function (response) {
+                                        if (response.Success) {
+                                            swal(
+                                                "Done",
+                                                "Profile has been Updated",
+                                                "success"
+                                            );
+                                        }
+                                        else {
+                                            swal(
+                                                "Failed",
+                                                "Failed To Update Your Profile.",
+                                                "warning"
+                                            );
+                                        }
+                                    }).fail(function (XMLHttpRequest, testStatus, errorThrown) {
+                                        swal(
+                                            "Failed",
+                                            "Failed To Update Your Profile.",
+                                            "warning"
+                                        );
+                                    });
+                                });
+</script>

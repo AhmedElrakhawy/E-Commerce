@@ -1,0 +1,98 @@
+﻿@model Ecommerce.Web.ViewModel.ManageUserRolesViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<div class="card">
+    <div class="card-header">
+        Add/Remove Roles for User @ViewBag.UserName.
+    </div>
+</div>
+<form method="post" id="FormData" action="@Url.Action("Manage","User")">
+    <div class="card-body">
+        @{ var Checked = "";}
+        @foreach (var Role in Model.Roles)
+        {
+            if (Role == Model.RoleName.Name)
+            {
+                Checked = "checked";
+            }
+            else
+            {
+                Checked = "";
+            }
+            <div class="form-check m-1">
+                <input type="hidden" value="@Model.UserId" />
+                <input type="hidden" value="@Model.UserId" />
+                <label>@Role</label>
+                <input type="radio" value="@Role" name="RoleName" id="RoleChange" />
+
+            </div>
+        }
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+    <div>
+        <button type="button" id="SubmitRole">Submit Role</button>
+    </div>
+    <div class="card-footer">
+        <a asp-action="EditUser" asp-route-id="@ViewBag.userId"
+           class="btn btn-primary" style="width:auto">Cancel</a>
+    </div>
+</form>
+<script>
+    $("#SubmitRole").click(function () {
+        debugger;
+        var ID = '@Model.UserId';
+        var RoleName = $("#FormData").serialize();
+        var Form = { ID, RoleName };
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Manage", "User")',
+            data: Form
+        }).done(function (response) {
+            if (response.Success) {
+                swal(
+                    "Done",
+                    "User Role has been Changed",
+                    "success"
+                )
+            }
+            else {
+                swal(
+                    "Failed",
+                    "Failed To be Change User Role.",
+                    "warning"
+                );
+            }
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            swal(
+                "Failed",
+                "Failed To be Change User Role.",
+                "warning"
+            );
+        });
+    });
+
+    @*$("#RoleChange").change(function () {
+        debugger;
+        var ID = $("#RoleChange").val();
+        var UserId = $(this).attr("#data-id");
+        var RoleVal = $(this).attr("#data-Role");
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Manage","User")',
+            data: {
+                model: Form
+            }
+        }).done(function (response) {
+            if (Response.Success) {
+                alert("Done");
+            }
+            else {
+                alert("Fail");
+            }
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Fail")
+        });
+    });*@
+</script>

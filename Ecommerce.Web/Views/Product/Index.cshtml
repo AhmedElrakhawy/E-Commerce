@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Products";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js"></script>
+
+<section class="flat-row flat-iconbox">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section">
+                    <div class="title">
+                        Products
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="tableContainer">
+            @{
+                Html.RenderAction("ProductTable");
+            }
+        </div>
+    </div>
+
+    <hr />
+
+
+    <div id="actionContainer">
+
+    </div>
+
+</section>
+<script>
+    function focusAction(controlToFocus) {
+        $('html , body').animate({
+            scrollTop: $("#" + controlToFocus).offset().top - 100
+        }, 1000);
+    }
+</script>

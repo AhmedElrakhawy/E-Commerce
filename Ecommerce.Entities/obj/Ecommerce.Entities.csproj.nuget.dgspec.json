@@ -1,0 +1,65 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\SOFT\\source\\repos\\ECommerce\\Ecommerce.Entities\\Ecommerce.Entities.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\SOFT\\source\\repos\\ECommerce\\Ecommerce.Entities\\Ecommerce.Entities.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\SOFT\\source\\repos\\ECommerce\\Ecommerce.Entities\\Ecommerce.Entities.csproj",
+        "projectName": "Ecommerce.Entities",
+        "projectPath": "C:\\Users\\SOFT\\source\\repos\\ECommerce\\Ecommerce.Entities\\Ecommerce.Entities.csproj",
+        "packagesPath": "C:\\Users\\SOFT\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SOFT\\source\\repos\\ECommerce\\Ecommerce.Entities\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\SOFT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net452"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\SOFT\\.nuget\\packages\\": {},
+          "D:\\My work\\Entity Framework in Depth - The Complete Guide\\9. Using Entity Framework in Your Applications\\PlutoWeb\\packages": {},
+          "http://go.microsoft.com/fwlink/?LinkID=206669": {},
+          "http://packages.nuget.org/v1/FeedService.svc/": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net452": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net452": {
+          "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.AspNet.Identity.EntityFramework": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

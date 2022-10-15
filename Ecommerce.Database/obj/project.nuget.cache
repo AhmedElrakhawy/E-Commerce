@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "dgSpecHash": "qT0OjpBTs4pZkQ9sidIpsq5XosqXTOEr6oWqZiHgOsAVkF+k14gjWxq7z7uflzD38D52rvn5QX2MPfCwvvD+jQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\SOFT\\source\\repos\\ECommerce\\Ecommerce.Database\\Ecommerce.Database.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\SOFT\\.nuget\\packages\\entityframework\\6.1.3\\entityframework.6.1.3.nupkg.sha512",
+    "C:\\Users\\SOFT\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.0.1\\microsoft.aspnet.identity.core.2.0.1.nupkg.sha512",
+    "C:\\Users\\SOFT\\.nuget\\packages\\microsoft.aspnet.identity.entityframework\\2.0.1\\microsoft.aspnet.identity.entityframework.2.0.1.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package downgrade: Microsoft.AspNet.Identity.EntityFramework from 2.2.3 to 2.0.1. Reference the package directly from the project to select a different version. \r\n Ecommerce.Database -> Ecommerce.Entities -> Microsoft.AspNet.Identity.EntityFramework (>= 2.2.3) \r\n Ecommerce.Database -> Microsoft.AspNet.Identity.EntityFramework (>= 2.0.1)",
+      "libraryId": "Microsoft.AspNet.Identity.EntityFramework",
+      "targetGraphs": [
+        ".NETFramework,Version=v4.5.2",
+        ".NETFramework,Version=v4.5.2/win",
+        ".NETFramework,Version=v4.5.2/win-x64",
+        ".NETFramework,Version=v4.5.2/win-x86"
+      ]
+    }
+  ]
+}

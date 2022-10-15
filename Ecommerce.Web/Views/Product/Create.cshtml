@@ -1,0 +1,138 @@
+﻿@model Ecommerce.Web.ViewModel.UpsertProductViewModel
+@{
+    ViewBag.Title = "Create";
+    var ImageURL = !string.IsNullOrEmpty(Model.ImageUrl) ? Model.ImageUrl : "/Content/images/system/placeholder-image.png";
+}
+
+<h2>Create Product</h2>
+<hr />
+
+<form id="CreateProduct" method="post">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Category</label>
+                <select name="CategoryID" class="form-control">
+                    @foreach (var Categoty in Model.Categories)
+                    {
+                        <option value="@Categoty.ID">@Categoty.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Name<span class="text-danger">*</span></label>
+                <input class="form-control" name="Name" />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input class="form-control" name="Description" />
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input class="form-control" name="Price" />
+            </div>
+            <div class="form-group">
+                <label>Image</label>
+                <input id="ImageUrl" name="ImageUrl" type="hidden" />
+                <input class="form-control" id="imageUpload" name="Image" type="file" accept=".jpg , .png" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="thumb">
+                <img class="img-thumbnail img-fluid" id="Productimage" src="@ImageURL" />
+            </div>
+        </div>
+    </div>
+    <button id="SaveBtn" type="button">Save</button>
+    <button id="CancelBtn" type="button">Cancel</button>
+</form>
+
+<script>
+    $('#CreateProduct').validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 5,
+                maxlength: 50,
+            },
+            Description: {
+                maxlength: 500
+            },
+            Price: {
+                range:[500,20000]
+            }
+        },
+        messages: {
+            Name: {
+                required: 'Name is required',
+                minlength: 'Minimum Length is 5',
+                maxlength: 'Maximum Length is 50'
+            },
+            Description: {
+                maxlength: 'Maximum Length is 500'
+            },
+            Price: {
+                range:'Range must be between 500 to 20000'
+            }
+        }
+    });
+    $("#SaveBtn").click(function () {
+        if ($("#CreateProduct").valid()) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create","Product")',
+                data: $("#CreateProduct").serialize()
+            }).done(function (response) {
+                $("#actionContainer").html("");
+                $("#tableContainer").html(response);
+                focusAction("tableContainer");
+            }).fail(function (XMLHttpRequest, testStatus, errorThrown) {
+                swal({
+                    title: "warning",
+                    text: "Something went wrong while creating this Product, Enter All Fields.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                });
+            })
+        }
+        else {
+            swal({
+                title: "warning",
+                text: "Something went wrong while creating this Product, Enter All Fields.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            });
+        }
+    });
+    $("#CancelBtn").click(function () {
+        $("#actionContainer").html("");
+        focusAction("tableContainer");
+    });
+      $("#imageUpload").change(function () {
+        var element = this;
+        var formdata = new FormData();
+        var totalfile = element.files.length;
+        for (var i = 0; i < totalfile; i++) {
+            var file = element.files[i];
+            formdata.append("photo", file);
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadImage","Shared")' /*'/Shared/UploadImage'*/,
+            dataType:'json',
+            data: formdata,
+            contentType: false,
+            processData: false
+        }).done(function (response) {
+            console.log(response);
+            if (response.Success) {
+                $("#Productimage").attr("src", response.ImageURL);
+                $("#ImageUrl").val(response.ImageURL);
+            }
+        }).fail(function (XMLHttpRequest, testStatus, errorThrown) {
+            alert("Fail");
+        });
+    });
+</script>
